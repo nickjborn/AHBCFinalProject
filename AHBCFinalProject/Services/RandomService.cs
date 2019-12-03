@@ -15,11 +15,11 @@ namespace AHBCFinalProject.Services
             _randomRecipeStore = randomRecipeStore ?? throw new ArgumentNullException(nameof(randomRecipeStore));
         }
 
-        public async Task<RecipeViewModel> GetAllRandomRecipes()
+        public async Task<RecipesViewModel> GetAllRandomRecipes()
         {
             var result = await _randomRecipeStore.GetAllRandomRecipes();
 
-            var recipeViewModel = new RecipeViewModel
+            var recipeViewModel = new RecipesViewModel
             {
                 Recipes = result.Results.Select(randomRecipe =>
                 new Recipe

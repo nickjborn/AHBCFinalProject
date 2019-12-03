@@ -8,6 +8,6 @@ namespace AHBCFinalProject.Services
 {
     interface IRandomService
     {
-        Task<RecipeViewModel> GetAllRandomRecipes();
+        Task<RecipesViewModel> GetAllRandomRecipes();
     }
 }

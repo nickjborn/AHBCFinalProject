@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace AHBCFinalProject.Models
 {
-    public class RecipeViewModel
+    public class RecipesViewModel
     {
+        public IList<Recipe> Recipes { get; set; }
     }
 }
