@@ -10,5 +10,6 @@ namespace AHBCFinalProject.SpoonacularServices
     public interface IComplexSearchStore
     {
         Task<ListOfRecipesResponse> GetRecipesComplexSearch(UserPreferenceDALModel userPreferenceDAL);
+
     }
 }

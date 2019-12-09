@@ -19,8 +19,8 @@ namespace AHBCFinalProject.DAL
 
         public bool InsertWeeklyMealPlan(MealPlanHistoryViewModel dalModel)
         {
-            var sql = $@"INSERT INTO MealPlanHistory (Id, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, StartDate, EndDate) 
-                            VALUES (@{nameof(dalModel.Id)}, @{nameof(dalModel.Monday)},@{nameof(dalModel.Tuesday)},@{nameof(dalModel.Wednesday)},@{nameof(dalModel.Thursday)},@{nameof(dalModel.Friday)},@{nameof(dalModel.Saturday)}, @{nameof(dalModel.StartDate)}, @{nameof(dalModel.EndDate)})";
+            var sql = $@"INSERT INTO AllMealPlans (Id, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, StartDate, EndDate) 
+                            VALUES (@{nameof(dalModel.Id)}, @{nameof(dalModel.Sunday)}, @{nameof(dalModel.Monday)},@{nameof(dalModel.Tuesday)},@{nameof(dalModel.Wednesday)},@{nameof(dalModel.Thursday)},@{nameof(dalModel.Friday)},@{nameof(dalModel.Saturday)}, @{nameof(dalModel.StartDate)}, @{nameof(dalModel.EndDate)})";
 
             using (var connection = new SqlConnection(_config.ConnectionString))
             {

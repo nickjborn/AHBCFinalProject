@@ -120,6 +120,7 @@ namespace AHBCFinalProject
             services.AddSingleton<IComplexSearchStore, ComplexSearchStore>();
 
 
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
           
         }
