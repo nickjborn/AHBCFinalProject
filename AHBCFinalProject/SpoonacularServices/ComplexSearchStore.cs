@@ -26,7 +26,7 @@ namespace AHBCFinalProject.SpoonacularServices
         public async Task<ListOfRecipesResponse> GetRecipesComplexSearch()
         {
             var id = _userIdService.getUserId();
-            var userPreferenceDAL = _userPreferenceStore.SelectUserPreferences(id);
+            var userPreferenceDAL = await _userPreferenceStore.SelectUserPreferences(id);
             var weekOfRecipes = new ListOfRecipesResponse()
             {
                 Results = new List<RecipeResponse>()

@@ -47,18 +47,18 @@ namespace AHBCFinalProject.DAL
         //    }    
         //}
 
-        public UserPreferenceDALModel SelectUserPreferences(int userId)
+        public async Task<UserPreferenceDALModel> SelectUserPreferences(int userId)
         {
             var sql = $@"SELECT * FROM DietaryRestrictions WHERE Id = {userId}";
 
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var results = connection.QueryFirstOrDefault<UserPreferenceDALModel>(sql, new { Id = userId });
+                var results = await connection.QueryFirstOrDefaultAsync<UserPreferenceDALModel>(sql, new { Id = userId });
                 return results;
             }
         }
 
-        public bool UpdateUserPreferences(UserPreferenceDALModel dalModel)
+        public async Task<bool> UpdateUserPreferences(UserPreferenceDALModel dalModel)
         {
             var UserId = _userIdService.getUserId();
             bool success = false;
@@ -69,7 +69,7 @@ namespace AHBCFinalProject.DAL
 
                 using (var connection = new SqlConnection(_config.ConnectionString))
                 {
-                    var result = connection.Execute(sql, dalModel);
+                    var result = await connection.ExecuteAsync(sql, dalModel);
                     success = true;
                 }
             }
@@ -80,7 +80,7 @@ namespace AHBCFinalProject.DAL
       
                 using (var connection = new SqlConnection(_config.ConnectionString))
                 {
-                    var result = connection.Execute(sql, dalModel);
+                    var result = await connection.ExecuteAsync(sql, dalModel);
                     success = true;
                 }
             }
@@ -91,7 +91,7 @@ namespace AHBCFinalProject.DAL
 
                 using (var connection = new SqlConnection(_config.ConnectionString))
                 {
-                    var result = connection.Execute(sql, dalModel);
+                    var result = await connection.ExecuteAsync(sql, dalModel);
                     success = true;
                 }
             }
