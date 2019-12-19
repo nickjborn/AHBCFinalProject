@@ -39,9 +39,9 @@ namespace AHBCFinalProject.Services
             return result;
         }
 
-        private UserPreferenceDALModel GetUpdatedPreferenceView(int id)
+        private async Task<UserPreferenceDALModel> GetUpdatedPreferenceView(int id)
         {
-            var dalPreference = _userPreferenceStore.SelectUserPreferences(id);
+            var dalPreference = await _userPreferenceStore.SelectUserPreferences(id);
             var dalModel = new UserPreferenceDALModel()
             {
                 Id = id,

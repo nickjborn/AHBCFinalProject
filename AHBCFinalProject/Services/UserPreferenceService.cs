@@ -18,10 +18,10 @@ namespace AHBCFinalProject.Services
             _userIdService = userIdService;
         }
 
-        public UserPreferencesViewModel GetUserPreferencesFromId()
+        public async Task<UserPreferencesViewModel> GetUserPreferencesFromId()
         {
             var UserID = _userIdService.getUserId();
-            var dalModel = _userPreferenceStore.SelectUserPreferences(UserID);
+            var dalModel = await _userPreferenceStore.SelectUserPreferences(UserID);
 
             string[] diet = { "" };
             string[] intolerances = { "" };
@@ -89,7 +89,7 @@ namespace AHBCFinalProject.Services
             return viewModel;
         }
 
-        public void SetUserPreferences(UserPreferencesViewModel viewModel)
+        public async Task SetUserPreferences(UserPreferencesViewModel viewModel)
         {
             var UserID = _userIdService.getUserId();
             var dalModel = new UserPreferenceDALModel();
@@ -153,7 +153,7 @@ namespace AHBCFinalProject.Services
                 dalModel.ExcludedIngredients = viewModel.ExcludedIngredients;
             }
             
-            _userPreferenceStore.UpdateUserPreferences(dalModel);
+            await _userPreferenceStore.UpdateUserPreferences(dalModel);
         }
 
         public UpdateUserViewModel GetUpdatedPreferenceView(UserPreferencesViewModel prefModel)
