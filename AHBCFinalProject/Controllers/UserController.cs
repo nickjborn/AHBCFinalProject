@@ -161,5 +161,14 @@ namespace AHBCFinalProject.Controllers
             var viewModel = _FavoriteMealService.FMReadyInMoreThan2Hrs();
             return View("FavoriteMealsView", viewModel);
         }
+
+        //public Task<IActionResult> UpdateOneResult(string day)
+        //{
+        //    var currentWeek = _mealPlanHistoryService.Update();
+
+
+        //    _mealPlanHistoryService.ViewMealPlanHistory
+
+        //}
     }   
 }

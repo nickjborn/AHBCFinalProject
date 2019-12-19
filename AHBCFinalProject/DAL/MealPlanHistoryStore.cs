@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using AHBCFinalProject.Models;
+using AHBCFinalProject.Services;
 using Dapper;
 
 namespace AHBCFinalProject.DAL
@@ -12,10 +13,12 @@ namespace AHBCFinalProject.DAL
     public class MealPlanHistoryStore : IMealPlanHistoryStore
     {
         private readonly Database _config;
+        private readonly IUserIdService _userIdService;
 
-        public MealPlanHistoryStore(AHBCFinalProjectConfiguration config)
+        public MealPlanHistoryStore(AHBCFinalProjectConfiguration config, IUserIdService userIdService)
         {
             _config = config.Database;
+            _userIdService = userIdService;
         }
 
         public bool InsertWeeklyMealPlan(MealPlanHistoryViewModel dalModel)
@@ -44,7 +47,9 @@ namespace AHBCFinalProject.DAL
 
         public MealPlanHistoryDALModel ViewCurrentMealPlan(CurrentMPViewModel model)
         {
-            var sql = $@"SELECT * FROM AllMealPlans WHERE Id = @{nameof(model.Id)} AND @{nameof(model.TodaysDate)} BETWEEN StartDate AND EndDate";
+            var userId = _userIdService.getUserId();
+            var now = DateTime.Today;
+            var sql = $@"SELECT * FROM AllMealPlans WHERE Id = {userId} AND {now} BETWEEN StartDate AND EndDate";
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
                 var results = connection.QueryFirst<MealPlanHistoryDALModel>(sql, model);
@@ -59,6 +64,19 @@ namespace AHBCFinalProject.DAL
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
                 var results = connection.QueryFirst<MealPlanHistoryDALModel>(sql, model);
+
+                return results;
+            }
+        }
+
+        public MealPlanHistoryDALModel UpdateOneResult(string day)
+        {
+            var userId = _userIdService.getUserId();
+            var now = DateTime.Today;
+            var sql = $@"UPDATE SET {day} WHERE Id = {userId} AND {now} BETWEEN StartDate AND EndDate";
+            using (var connection = new SqlConnection(_config.ConnectionString))
+            {
+                var results = connection.QueryFirst<MealPlanHistoryDALModel>(sql);
 
                 return results;
             }

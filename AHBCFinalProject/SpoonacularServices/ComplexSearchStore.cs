@@ -34,9 +34,7 @@ namespace AHBCFinalProject.SpoonacularServices
 
             using (var httpClient = new HttpClient { BaseAddress = new Uri("https://api.spoonacular.com/recipes/complexSearch") })
             {
-
                 var apiResult = await httpClient.GetStringAsync($"?apiKey={ApiKey}&number=7&sort=random&diet={userPreferenceDAL.Diet}&intolerances={userPreferenceDAL.Intolerances}&excludeIngredients={userPreferenceDAL.ExcludedIngredients}&type='main course'&instructionsRequired=true");
-
                 var sevenRecipes = JsonConvert.DeserializeObject<ListOfRecipesResponse>(apiResult);
 
                 foreach (var recipe in sevenRecipes.Results)
@@ -47,5 +45,22 @@ namespace AHBCFinalProject.SpoonacularServices
                 return weekOfRecipes;
             }
         }
+
+        public async Task<RecipeResponse> GetOneRecipeComplexSearch()
+        {
+            var id = _userIdService.getUserId();
+            var userPreferenceDAL = _userPreferenceStore.SelectUserPreferences(id);
+            var oneNewRecipe = new RecipeResponse();
+
+            using (var httpClient = new HttpClient { BaseAddress = new Uri("https://api.spoonacular.com/recipes/complexSearch") })
+            {
+                var apiResult = await httpClient.GetStringAsync($"?apiKey={ApiKey}&number=1&sort=random&diet={userPreferenceDAL.Diet}&intolerances={userPreferenceDAL.Intolerances}&excludeIngredients={userPreferenceDAL.ExcludedIngredients}&type='main course'&instructionsRequired=true");
+
+                var sevenRecipes = JsonConvert.DeserializeObject<RecipeResponse>(apiResult);
+
+                return oneNewRecipe;
+            }
+        }
+
     }
 }

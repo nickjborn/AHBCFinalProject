@@ -12,6 +12,7 @@ namespace AHBCFinalProject.DAL
         MealPlanHistoryDALModel ViewCurrentMealPlan(CurrentMPViewModel model);
         bool InsertWeeklyMealPlan(MealPlanHistoryViewModel dalModel);
         IEnumerable<MealPlanHistoryDALModel> ViewWeeklyMealPlan(ViewMealPlanViewModel dalModel);
+        MealPlanHistoryDALModel UpdateOneResult(string day);
 
     }
 }
