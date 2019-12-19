@@ -20,11 +20,11 @@ namespace AHBCFinalProject.Services
             _recipeByIdService = recipeByIdService;
         }
 
-        public FavoriteMealsViewModel DeleteAFavoriteMeal(string recipeId)
+        public async Task<FavoriteMealsViewModel> DeleteAFavoriteMeal(string recipeId)
         {
-            _favoriteMealStore.DeleteAFaveMeal(recipeId);
+            await _favoriteMealStore.DeleteAFaveMeal(recipeId);
 
-            var dalViewAllFavMeals = _favoriteMealStore.SelectAllFavMeals();
+            var dalViewAllFavMeals = await _favoriteMealStore.SelectAllFavMeals();
             var favMeals = new List<FavoriteMealViewModel>();
 
             foreach (var dalMeal in dalViewAllFavMeals)
@@ -45,9 +45,9 @@ namespace AHBCFinalProject.Services
             return favMealsViewModel;
         }
 
-        public FavoriteMealsViewModel FMReadyIn1Hrs()
+        public async Task<FavoriteMealsViewModel> FMReadyIn1Hrs()
         {
-            var allMeals = _favoriteMealStore.SelectAllFavMealsReadyIn1Hr();
+            var allMeals = await _favoriteMealStore.SelectAllFavMealsReadyIn1Hr();
             var favMeals = new List<FavoriteMealViewModel>();
 
             foreach (var dalMeal in allMeals)
@@ -68,9 +68,9 @@ namespace AHBCFinalProject.Services
             return favMealsViewModel;
         }
 
-        public FavoriteMealsViewModel FMReadyIn1To2Hrs()
+        public async Task<FavoriteMealsViewModel> FMReadyIn1To2Hrs()
         {
-            var allMeals = _favoriteMealStore.SelectAllFavMealsReadyIn1To2Hrs();
+            var allMeals = await _favoriteMealStore.SelectAllFavMealsReadyIn1To2Hrs();
             var favMeals = new List<FavoriteMealViewModel>();
 
             foreach (var dalMeal in allMeals)
@@ -91,9 +91,9 @@ namespace AHBCFinalProject.Services
             return favMealsViewModel;
         }
 
-        public FavoriteMealsViewModel FMReadyIn30Min()
+        public async Task<FavoriteMealsViewModel> FMReadyIn30Min()
         {
-            var allMeals = _favoriteMealStore.SelectAllFavMealsReadyIn30Min();
+            var allMeals = await _favoriteMealStore.SelectAllFavMealsReadyIn30Min();
             var favMeals = new List<FavoriteMealViewModel>();
 
             foreach (var dalMeal in allMeals)
@@ -114,9 +114,9 @@ namespace AHBCFinalProject.Services
             return favMealsViewModel;
         }
 
-        public FavoriteMealsViewModel FMReadyInMoreThan2Hrs()
+        public async Task<FavoriteMealsViewModel> FMReadyInMoreThan2Hrs()
         {
-            var allMeals = _favoriteMealStore.SelectAllFavMealsReadyInMoreThan2Hrs();
+            var allMeals = await _favoriteMealStore.SelectAllFavMealsReadyInMoreThan2Hrs();
             var favMeals = new List<FavoriteMealViewModel>();
 
             foreach (var dalMeal in allMeals)
@@ -149,8 +149,8 @@ namespace AHBCFinalProject.Services
 
             };
 
-            _favoriteMealStore.InsertAFaveMeal(dalModel);
-            return MapFavMealDALtoView(dalModel);
+            await _favoriteMealStore.InsertAFaveMeal(dalModel);
+            return await MapFavMealDALtoView(dalModel);
         }
 
         
@@ -158,7 +158,7 @@ namespace AHBCFinalProject.Services
         {
             var recipeInfo = await _recipeByIdService.GetRecipeVMById(id);
 
-            var favMealInfo = _favoriteMealStore.SelectAFavMeal(id);
+            var favMealInfo = await _favoriteMealStore.SelectAFavMeal(id);
 
             var viewFavoriteMealViewModel = new ViewFavoriteMealViewModel
             {
@@ -176,9 +176,9 @@ namespace AHBCFinalProject.Services
 
         }
 
-        public FavoriteMealsViewModel SelectAllFavoriteMeals()
+        public async Task<FavoriteMealsViewModel> SelectAllFavoriteMeals()
         {
-            var allMeals = _favoriteMealStore.SelectAllFavMeals();
+            var allMeals = await _favoriteMealStore.SelectAllFavMeals();
             var favMeals = new List<FavoriteMealViewModel>();
 
             foreach (var dalMeal in allMeals)
@@ -212,9 +212,9 @@ namespace AHBCFinalProject.Services
             return viewModel;
         }
 
-        private FavoriteMealsViewModel MapFavMealDALtoView(FavoriteMealDALModel dalModel)
+        private async Task<FavoriteMealsViewModel> MapFavMealDALtoView(FavoriteMealDALModel dalModel)
         {
-            var dalViewAllFavMeals = _favoriteMealStore.SelectAllFavMeals();
+            var dalViewAllFavMeals = await _favoriteMealStore.SelectAllFavMeals();
             var favMeals = new List<FavoriteMealViewModel>();
 
             foreach (var dalMeal in dalViewAllFavMeals)

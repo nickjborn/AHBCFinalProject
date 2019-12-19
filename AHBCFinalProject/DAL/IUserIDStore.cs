@@ -7,6 +7,6 @@ namespace AHBCFinalProject.DAL
 {
     public interface IUserIDStore
     {
-        int getUserId(string email);
+        Task<int> getUserId(string email);
     }
 }

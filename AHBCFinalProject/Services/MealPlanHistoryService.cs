@@ -49,7 +49,7 @@ namespace AHBCFinalProject.Services
                 TodaysDate = DateTime.Today                
             };
 
-            var currentMP =_mealPlanHistoryStore.ViewCurrentMealPlan(currentViewModel);
+            var currentMP = await _mealPlanHistoryStore.ViewCurrentMealPlan(currentViewModel);
 
             var sunday = _recipeByIdService.GetRecipeVMById(currentMP.Sunday);
             var monday = _recipeByIdService.GetRecipeVMById(currentMP.Monday);
@@ -88,7 +88,7 @@ namespace AHBCFinalProject.Services
             model.TodaysDate = DateTime.Today;
             model.Id = _userIdService.getUserId();
 
-            var dalResults = _mealPlanHistoryStore.SearchPastMealPlans(model);
+            var dalResults = await _mealPlanHistoryStore.SearchPastMealPlans(model);
 
             var sunday = _recipeByIdService.GetRecipeVMById(dalResults.Sunday);
             var monday = _recipeByIdService.GetRecipeVMById(dalResults.Monday);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AHBCFinalProject.DAL
 {
-    public class FavoriteMealsStore: IFavoriteMealsStore
+    public class FavoriteMealsStore : IFavoriteMealsStore
     {
         private readonly Database _config;
         private readonly IUserIdService _userIdService;
@@ -20,18 +20,18 @@ namespace AHBCFinalProject.DAL
             _userIdService = userIdService;
         }
 
-        public bool DeleteAFaveMeal(string recipeId)
+        public async Task<bool> DeleteAFaveMeal(string recipeId)
         {
             var sql = @"DELETE FROM FavoriteMeals WHERE RecipeId = @recipeId";
 
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var result = connection.Execute(sql, new { RecipeId = recipeId });
+                var result = await connection.ExecuteAsync(sql, new { RecipeId = recipeId });
                 return true;
             }
         }
 
-        public bool InsertAFaveMeal(FavoriteMealDALModel dalModel)
+        public async Task<bool> InsertAFaveMeal(FavoriteMealDALModel dalModel)
         {
             var Id = _userIdService.getUserId();
             var sql = $@"INSERT INTO FavoriteMeals (Id, RecipeID, MealName, ReadyInMinutes, AdditionalComments) 
@@ -39,91 +39,91 @@ namespace AHBCFinalProject.DAL
 
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var results = connection.Execute(sql, dalModel);
+                var results = await connection.ExecuteAsync(sql, dalModel);
 
                 return true;
             }
         }
 
-        public FavoriteMealDALModel SelectAFavMeal(string recipeId)
+        public async Task<FavoriteMealDALModel> SelectAFavMeal(string recipeId)
         {
             var sql = @"SELECT * from FavoriteMeals where RecipeId = @RecipeId";
 
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var result = connection.QueryFirstOrDefault<FavoriteMealDALModel>(sql, new { recipeId = recipeId });
+                var result = await connection.QueryFirstOrDefaultAsync<FavoriteMealDALModel>(sql, new { recipeId = recipeId });
                 return result;
             }
         }
 
-        public IEnumerable<FavoriteMealDALModel> SelectAllFavMeals()
+        public async Task<IEnumerable<FavoriteMealDALModel>> SelectAllFavMeals()
         {
             var userId = _userIdService.getUserId();
             var sql = @"SELECT * FROM FavoriteMeals WHERE Id = @Id ORDER BY MealName ASC";
-             
-            using (var connection = new SqlConnection(_config.ConnectionString))   
+
+            using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var results = connection.Query<FavoriteMealDALModel>(sql, new { Id = userId }) ?? new List<FavoriteMealDALModel>();
+                var results = await connection.QueryAsync<FavoriteMealDALModel>(sql, new { Id = userId }) ?? new List<FavoriteMealDALModel>();
                 return results;
             }
         }
 
-        public bool UpdateFavoriteMealComments(FavoriteMealDALModel dalModel)
+        public async Task<bool> UpdateFavoriteMealComments(FavoriteMealDALModel dalModel)
         {
             var sql = $@"UPDATE FavoriteMeals SET AdditionalComments = @{nameof(dalModel.AdditionalComments)} WHERE Id = @{nameof(dalModel.Id)} and RecipeID = @{nameof(dalModel.RecipeID)}";
 
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var results = connection.Execute(sql, dalModel);
+                var results = await connection.ExecuteAsync(sql, dalModel);
 
                 return true;
             }
         }
 
-        public IEnumerable<FavoriteMealDALModel> SelectAllFavMealsReadyIn1To2Hrs()
+        public async Task<IEnumerable<FavoriteMealDALModel>> SelectAllFavMealsReadyIn1To2Hrs()
         {
             var userId = _userIdService.getUserId();
             var sql = @"SELECT * FROM FavoriteMeals WHERE Id = @Id AND ReadyInMinutes BETWEEN 60 AND 120 ORDER BY MealName ASC";
 
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var results = connection.Query<FavoriteMealDALModel>(sql, new { Id = userId}) ?? new List<FavoriteMealDALModel>();
+                var results = await connection.QueryAsync<FavoriteMealDALModel>(sql, new { Id = userId }) ?? new List<FavoriteMealDALModel>();
                 return results;
             }
         }
 
-        public IEnumerable<FavoriteMealDALModel> SelectAllFavMealsReadyIn30Min()
+        public async Task<IEnumerable<FavoriteMealDALModel>> SelectAllFavMealsReadyIn30Min()
         {
             var userId = _userIdService.getUserId();
             var sql = @"SELECT * FROM FavoriteMeals WHERE Id = @Id AND ReadyInMinutes BETWEEN 0 AND 30 ORDER BY MealName ASC";
 
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var results = connection.Query<FavoriteMealDALModel>(sql, new { Id = userId }) ?? new List<FavoriteMealDALModel>();
+                var results = await connection.QueryAsync<FavoriteMealDALModel>(sql, new { Id = userId }) ?? new List<FavoriteMealDALModel>();
                 return results;
             }
         }
 
-        public IEnumerable<FavoriteMealDALModel> SelectAllFavMealsReadyIn1Hr()
+        public async Task<IEnumerable<FavoriteMealDALModel>> SelectAllFavMealsReadyIn1Hr()
         {
             var userId = _userIdService.getUserId();
             var sql = @"SELECT * FROM FavoriteMeals WHERE Id = @Id AND ReadyInMinutes BETWEEN 30 AND 60 ORDER BY MealName ASC";
 
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var results = connection.Query<FavoriteMealDALModel>(sql, new { Id = userId }) ?? new List<FavoriteMealDALModel>();
+                var results = await connection.QueryAsync<FavoriteMealDALModel>(sql, new { Id = userId }) ?? new List<FavoriteMealDALModel>();
                 return results;
             }
         }
 
-        public IEnumerable<FavoriteMealDALModel> SelectAllFavMealsReadyInMoreThan2Hrs()
+        public async Task<IEnumerable<FavoriteMealDALModel>> SelectAllFavMealsReadyInMoreThan2Hrs()
         {
             var userId = _userIdService.getUserId();
             var sql = @"SELECT * FROM FavoriteMeals WHERE Id = @Id AND ReadyInMinutes BETWEEN 30 AND 60 ORDER BY MealName ASC";
 
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var results = connection.Query<FavoriteMealDALModel>(sql, new { Id = userId }) ?? new List<FavoriteMealDALModel>();
+                var results = await connection.QueryAsync<FavoriteMealDALModel>(sql, new { Id = userId }) ?? new List<FavoriteMealDALModel>();
                 return results;
             }
         }

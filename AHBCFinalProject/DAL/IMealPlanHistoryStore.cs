@@ -10,9 +10,8 @@ namespace AHBCFinalProject.DAL
     {
         MealPlanHistoryDALModel SearchPastMealPlans(ViewMealPlanViewModel model);
         MealPlanHistoryDALModel ViewCurrentMealPlan(CurrentMPViewModel model);
-        bool InsertWeeklyMealPlan(MealPlanHistoryViewModel dalModel);
-        IEnumerable<MealPlanHistoryDALModel> ViewWeeklyMealPlan(ViewMealPlanViewModel dalModel);
+        Task<bool> InsertWeeklyMealPlan(MealPlanHistoryViewModel dalModel);
+        Task<IEnumerable<MealPlanHistoryDALModel>> ViewWeeklyMealPlan(ViewMealPlanViewModel dalModel);
         MealPlanHistoryDALModel UpdateOneResult(string day);
-
     }
 }
