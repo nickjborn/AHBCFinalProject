@@ -40,6 +40,13 @@ namespace AHBCFinalProject.Services
 
             _mealPlanHistoryStore.InsertWeeklyMealPlan(mealPlanHistoryViewModel);
         }
+        /////////
+        /////////
+        /////////
+        public async Task UpdateOneDay(string day)
+        {
+            await _mealPlanHistoryStore.UpdateOneResult(day);
+        }
 
         public async Task<ViewPlanViewModel> ViewCurrentMealPlan()
         {

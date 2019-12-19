@@ -11,5 +11,6 @@ namespace AHBCFinalProject.Services
         void AddMealPlanToHistory(ListOfRecipesViewModel result);
         Task<ViewPlanViewModel> ViewMealPlanHistory(ViewMealPlanViewModel model);
         Task<ViewPlanViewModel> ViewCurrentMealPlan();
+        Task UpdateOneDay(string day);
     }
 }

@@ -12,5 +12,6 @@ namespace AHBCFinalProject.DAL
         Task<MealPlanHistoryDALModel> ViewCurrentMealPlan(CurrentMPViewModel model);
         Task<bool> InsertWeeklyMealPlan(MealPlanHistoryViewModel dalModel);
         Task<IEnumerable<MealPlanHistoryDALModel>> ViewWeeklyMealPlan(ViewMealPlanViewModel dalModel);
+        Task UpdateOneResult(string day);
     }
 }
