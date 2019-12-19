@@ -126,12 +126,6 @@ namespace AHBCFinalProject.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> UpdateFavoriteMealResults(ViewFavoriteMealViewModel model)
-        {
-            var viewModel = await _FavoriteMealService.UpdateFavoriteMealComments(model);
-            return View(viewModel);
-        }
-
         public IActionResult DeleteFavoriteMeal(string id)
         {
             var viewModel = _FavoriteMealService.DeleteAFavoriteMeal(id);
