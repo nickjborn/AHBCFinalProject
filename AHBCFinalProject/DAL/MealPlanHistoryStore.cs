@@ -75,7 +75,7 @@ namespace AHBCFinalProject.DAL
             
             var userId = _userIdService.getUserId();
             var now = DateTime.Today;
-           // var newMeal = await _complexSearchStore.GetOneRecipeComplexSearch();
+            var newMeal = await _complexSearchStore.GetOneRecipeComplexSearch();
            // var newmealId = int.Parse(newMeal.id);
             var newmealId = 15357; //example meal id
             var sql = $@"UPDATE AllMealPlans SET {day} = {newmealId} WHERE Id = {userId}"; /* AND '{now}' BETWEEN StartDate AND EndDate*/

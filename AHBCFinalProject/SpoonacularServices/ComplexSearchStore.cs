@@ -57,7 +57,8 @@ namespace AHBCFinalProject.SpoonacularServices
             {
                 var apiResult = await httpClient.GetStringAsync($"?apiKey={ApiKey}&number=1&sort=random&diet={userPreferenceDAL.Diet}&intolerances={userPreferenceDAL.Intolerances}&excludeIngredients={userPreferenceDAL.ExcludedIngredients}&type='main course'&instructionsRequired=true");
 
-               var oneNewRecipe = JsonConvert.DeserializeObject<RecipeResponse>(apiResult);
+                var oneNewRecipe = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<RecipeResponse>(apiResult));
+              // var oneNewRecipe = JsonConvert.DeserializeObject<RecipeResponse>(apiResult);
 
                 return oneNewRecipe;
             }
