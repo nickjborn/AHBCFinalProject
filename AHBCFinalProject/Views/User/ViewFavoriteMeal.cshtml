@@ -33,14 +33,10 @@
             <p>@Model.Instructions</p>
         </div>
         <label>Additional Comments:</label>
-        <form>
-            <input type="text" value="@Model.AdditionalComments" asp-for="@Model.AdditionalComments" />
-
-            <button type="submit" asp-controller="User" asp-action="UpdateFavoriteMealResults" asp-route-id="@Model.Id">Save Comments</button>
-
-        </form>
+        <p>@Model.AdditionalComments</p>
     </div>
-    <a class="btn btn-outline-secondary" asp-controller="User" asp-action="UpdateFavoriteMeal" asp-route-id="@Model.Id">Edit Additional Comments</a>
+
+    <a class="btn btn-outline-secondary" asp-controller="User" asp-action="UpdateFavoriteMeal" asp-route-id="@Model.Id">Add Additional Comments</a>
     <a class="btn btn-outline-secondary" asp-controller="User" asp-action="DeleteFavoriteMeal" asp-route-id="@Model.Id">Delete from Favorites</a>
 
 </div>
