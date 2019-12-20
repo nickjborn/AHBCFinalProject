@@ -73,7 +73,7 @@ namespace AHBCFinalProject.Controllers
             catch(Exception)
             {
                 var listOfRecipes = await _complexSearchService.GetWeekOfRecipes();
-                _mealPlanHistoryService.AddMealPlanToHistory(listOfRecipes);
+                await _mealPlanHistoryService.AddMealPlanToHistory(listOfRecipes);
 
                 var viewModel = await _mealPlanHistoryService.ViewCurrentMealPlan();
                 return View(viewModel);
