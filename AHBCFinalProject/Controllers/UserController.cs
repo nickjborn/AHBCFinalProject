@@ -103,9 +103,9 @@ namespace AHBCFinalProject.Controllers
         //    return View(model);
         //}
 
-        public IActionResult FavoriteMealsView()
+        public async Task<IActionResult> FavoriteMealsView()
         {
-            var viewModel = _FavoriteMealService.SelectAllFavoriteMeals();
+            var viewModel = await _FavoriteMealService.SelectAllFavoriteMeals();
             return View(viewModel);
         }
 
