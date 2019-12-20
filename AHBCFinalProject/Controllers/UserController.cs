@@ -73,7 +73,7 @@ namespace AHBCFinalProject.Controllers
             catch(Exception)
             {
                 var listOfRecipes = await _complexSearchService.GetWeekOfRecipes();
-                _mealPlanHistoryService.AddMealPlanToHistory(listOfRecipes);
+                await _mealPlanHistoryService.AddMealPlanToHistory(listOfRecipes);
 
                 var viewModel = await _mealPlanHistoryService.ViewCurrentMealPlan();
                 return View(viewModel);
@@ -94,14 +94,6 @@ namespace AHBCFinalProject.Controllers
                 return View("Error");
             }
         }
-
-
-
-        //public IActionResult UpdatePreference()
-        //{
-        //    var model = _userPreferenceService.GetUpdatedPreferenceView();
-        //    return View(model);
-        //}
 
         public async Task<IActionResult> FavoriteMealsView()
         {
@@ -162,5 +154,12 @@ namespace AHBCFinalProject.Controllers
             var viewModel = _FavoriteMealService.FMReadyInMoreThan2Hrs();
             return View("FavoriteMealsView", viewModel);
         }
-    }   
+
+        public async Task<IActionResult> UpdateOneResult(string day)
+        {
+            await _mealPlanHistoryService.UpdateOneDay(day);
+            return RedirectToAction(nameof(ViewPlan), "User");
+        }
+
+    }
 }

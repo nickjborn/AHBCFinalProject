@@ -6,16 +6,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using AHBCFinalProject.Models;
 using Dapper;
+using AHBCFinalProject.Services;
+using AHBCFinalProject.SpoonacularServices;
 
 namespace AHBCFinalProject.DAL
 {
     public class MealPlanHistoryStore : IMealPlanHistoryStore
     {
         private readonly Database _config;
+        private readonly IUserIdService _userIdService;
+        private readonly IComplexSearchStore _complexSearchStore;
 
-        public MealPlanHistoryStore(AHBCFinalProjectConfiguration config)
+        public MealPlanHistoryStore(AHBCFinalProjectConfiguration config, IUserIdService userIdService, IComplexSearchStore complexSearchService)
         {
             _config = config.Database;
+            _userIdService = userIdService;
+            _complexSearchStore = complexSearchService;
         }
 
         public async Task<bool> InsertWeeklyMealPlan(MealPlanHistoryViewModel dalModel)
@@ -61,6 +67,21 @@ namespace AHBCFinalProject.DAL
                 var results = await connection.QueryFirstAsync<MealPlanHistoryDALModel>(sql, model);
 
                 return results;
+            }
+        }
+
+        public async Task UpdateOneResult(string day)
+        {     
+            var userId = _userIdService.getUserId();
+            var now = DateTime.Today;
+            var newMeal = await _complexSearchStore.GetOneRecipeComplexSearch();
+            var newmealId = int.Parse(newMeal.id);
+            //var newmealId = 15357; //example meal id
+           // var sql = $@"UPDATE AllMealPlans SET {day} = {newmealId} WHERE Id = {userId} AND '{now}' BETWEEN StartDate AND EndDate";
+            var sql = $@"UPDATE AllMealPlans SET {day} = {newmealId} WHERE Id = {userId}";
+            using (var connection = new SqlConnection(_config.ConnectionString))
+            {
+                var results = await connection.ExecuteAsync(sql);
             }
         }
     }

@@ -20,7 +20,7 @@ namespace AHBCFinalProject.Services
             _recipeByIdService = recipeByIdService;
         }
                 
-        public void AddMealPlanToHistory(ListOfRecipesViewModel result) 
+        public async Task AddMealPlanToHistory(ListOfRecipesViewModel result) 
         {
             var today = DateTime.Today;
 
@@ -38,7 +38,14 @@ namespace AHBCFinalProject.Services
 
             };
 
-            _mealPlanHistoryStore.InsertWeeklyMealPlan(mealPlanHistoryViewModel);
+            await _mealPlanHistoryStore.InsertWeeklyMealPlan(mealPlanHistoryViewModel);
+        }
+        /////////
+        /////////
+        /////////
+        public async Task UpdateOneDay(string day)
+        {
+            await _mealPlanHistoryStore.UpdateOneResult(day);
         }
 
         public async Task<ViewPlanViewModel> ViewCurrentMealPlan()
