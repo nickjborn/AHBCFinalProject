@@ -71,17 +71,17 @@ namespace AHBCFinalProject.DAL
         }
 
         public async Task UpdateOneResult(string day)
-        {
-            
+        {     
             var userId = _userIdService.getUserId();
             var now = DateTime.Today;
             var newMeal = await _complexSearchStore.GetOneRecipeComplexSearch();
-           // var newmealId = int.Parse(newMeal.id);
-            var newmealId = 15357; //example meal id
-            var sql = $@"UPDATE AllMealPlans SET {day} = {newmealId} WHERE Id = {userId}"; /* AND '{now}' BETWEEN StartDate AND EndDate*/
+            var newmealId = int.Parse(newMeal.id);
+            //var newmealId = 15357; //example meal id
+           // var sql = $@"UPDATE AllMealPlans SET {day} = {newmealId} WHERE Id = {userId} AND '{now}' BETWEEN StartDate AND EndDate";
+            var sql = $@"UPDATE AllMealPlans SET {day} = {newmealId} WHERE Id = {userId}";
             using (var connection = new SqlConnection(_config.ConnectionString))
             {
-                var results = await connection.QueryFirstAsync<MealPlanHistoryDALModel>(sql);
+                var results = await connection.ExecuteAsync(sql);
             }
         }
     }

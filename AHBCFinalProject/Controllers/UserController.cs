@@ -95,14 +95,6 @@ namespace AHBCFinalProject.Controllers
             }
         }
 
-
-
-        //public IActionResult UpdatePreference()
-        //{
-        //    var model = _userPreferenceService.GetUpdatedPreferenceView();
-        //    return View(model);
-        //}
-
         public async Task<IActionResult> FavoriteMealsView()
         {
             var viewModel = await _FavoriteMealService.SelectAllFavoriteMeals();
@@ -166,8 +158,7 @@ namespace AHBCFinalProject.Controllers
         public async Task<IActionResult> UpdateOneResult(string day)
         {
             await _mealPlanHistoryService.UpdateOneDay(day);
-
-            return await ViewPlan();
+            return RedirectToAction(nameof(ViewPlan), "User");
         }
 
     }
