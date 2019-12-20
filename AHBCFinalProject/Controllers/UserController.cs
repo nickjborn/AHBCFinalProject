@@ -45,10 +45,11 @@ namespace AHBCFinalProject.Controllers
         }
         
 
-        public IActionResult UpdateUserPreferences(UserPreferencesViewModel model)
+        public async Task<IActionResult> UpdateUserPreferences(UserPreferencesViewModel model)
         {
             _userPreferenceService.SetUserPreferences(model);
             var viewModel = _userPreferenceService.GetUpdatedPreferenceView(model);
+            await UpdateAllResults();
             return View(nameof(ConfirmUserPreferences), viewModel);
         }
 
@@ -159,6 +160,17 @@ namespace AHBCFinalProject.Controllers
         {
             await _mealPlanHistoryService.UpdateOneDay(day);
             return RedirectToAction(nameof(ViewPlan), "User");
+        }
+
+        public async Task UpdateAllResults()
+        {
+            await _mealPlanHistoryService.UpdateOneDay("Sunday");
+            await _mealPlanHistoryService.UpdateOneDay("Monday");
+            await _mealPlanHistoryService.UpdateOneDay("Tuesday");
+            await _mealPlanHistoryService.UpdateOneDay("Wednesday");
+            await _mealPlanHistoryService.UpdateOneDay("Thursday");
+            await _mealPlanHistoryService.UpdateOneDay("Friday");
+            await _mealPlanHistoryService.UpdateOneDay("Saturday");
         }
 
     }
